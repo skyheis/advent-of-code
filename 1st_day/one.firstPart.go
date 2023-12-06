@@ -14,7 +14,7 @@ func check(e error) {
 }
 
 func main() {
-	file, error := os.Open("day_one_p1/input")
+	file, error := os.Open("day_one/input")
 	check(error)
 	defer file.Close()
 
