@@ -1,4 +1,4 @@
-# advent-of-code in Go
+# 🎄 advent-of-code in Go 🎄
 
 This year my mom didn't buy me a chocolate advent calendar (maybe it's beacuse I'm 26), so I decided to do something about it... Christmas is so cool and I didn't wanna miss the routine of waiting for the 25th as of tradition!
 
