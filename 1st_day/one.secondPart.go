@@ -8,11 +8,11 @@ import (
 	"unicode"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
+// func check(e error) {
+// 	if e != nil {
+// 		panic(e)
+// 	}
+// }
 
 func digitOrNumber(line string, numbs [9]string) int {
 
@@ -28,7 +28,7 @@ func digitOrNumber(line string, numbs [9]string) int {
 }
 
 func main() {
-	file, error := os.Open("day_one_p1/input")
+	file, error := os.Open("1st_day/input")
 	check(error)
 	defer file.Close()
 

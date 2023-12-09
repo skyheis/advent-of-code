@@ -43,7 +43,7 @@ func ftGame(game string) bool {
 }
 
 func main() {
-	file, err := os.Open("day_two/input")
+	file, err := os.Open("2nd/input")
 	check(err)
 	defer file.Close()
 
