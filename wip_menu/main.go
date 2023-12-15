@@ -4,11 +4,11 @@ import sasso "advent-of-code/1st_day"
 
 func main() {
 	app := NewMenu("Chose a daily challenge to run:")
-	app.AddItem("Day 1 part one", "1f")
-	app.AddItem("Day 1 part one", "1s")
+	app.AddItem("Day 1", "one")
+	app.AddItem("Day 2", "two")
 
 	choice := app.Display()
-	if choice == "1f" {
+	if choice == "i" {
 		sasso.Sasso()
 	} else if choice == "1s" {
 		sasso.Sassi()
