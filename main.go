@@ -4,6 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package main
 
 import (
+	"advent-of-code/twentyfour"
 	"advent-of-code/twentythree"
 	"os"
 
@@ -22,6 +23,7 @@ You can find out more about the Advent of Code at https://adventofcode.com/`,
 func main() {
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.advent-of-code.yaml)")
 	rootCmd.AddCommand(twentythree.TwentythreeCmd)
+	rootCmd.AddCommand(twentyfour.TwentyfourCmd)
 
 	defaultHelpTemplate := rootCmd.HelpTemplate()
 

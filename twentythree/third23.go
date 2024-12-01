@@ -29,9 +29,9 @@ Here the problem statement: https://adventofcode.com/2023/day/3`,
 		filecontent, err := os.ReadFile(inputPath)
 		utils.CheckInputFileError(err)
 
-		file, error := os.Open(inputPath)
-		utils.CheckInputFileError(error)
-		defer file.Close()
+		// file, error := os.Open(inputPath)
+		// utils.CheckInputFileError(error)
+		// defer file.Close()
 
 		start := time.Now()
 		file_mat := strings.Split(string(filecontent), "\n")
@@ -43,7 +43,7 @@ Here the problem statement: https://adventofcode.com/2023/day/3`,
 		}
 		utils.PrintResult("one", result, end)
 
-		file.Seek(0, 0)
+		// file.Seek(0, 0)
 
 		start = time.Now()
 		file_mat = strings.Split(string(filecontent), "\n")

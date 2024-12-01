@@ -15,7 +15,7 @@ var TwentythreeCmd = &cobra.Command{
 I did not finish all the puzzles, but I learned a lot, and I am proud of my progress.
 I will continue to improve my skills and try to finish all the puzzles in the future.
 You can find out more about the Advent of Code at https://adventofcode.com/2023`,
-	Example: "advent-of-code twentythree 1st",
+	Example: "advent-of-code 2023 1st",
 }
 
 func init() {

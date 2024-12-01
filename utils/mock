@@ -15,14 +15,14 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 
 // // twentythreeCmd represents the twentythree command
 // var AAAAAA = &cobra.Command{
-// 	Use:   "1st",
-// 	Short: "Day 1 of Advent of Code 2023",
-// 	Long: `Day 1 of Advent of Code 2023, my very first day in Advent of Code!!!
-// Here the problem statement: https://adventofcode.com/2023/day/1`,
+// 	Use:   "9999",
+// 	Short: "Day 9999 of Advent of Code 2023",
+// 	Long: `Day 9999 of Advent of Code 2023, my very first day in Advent of Code!!!
+// Here the problem statement: https://adventofcode.com/2023/day/9999`,
 // 	Run: func(cmd *cobra.Command, args []string) {
 // 		fmt.Printf("Executing %s\n\n", cmd.Short)
 
-// 		inputPath := "twentythree/inputs/one.input"
+// 		inputPath := "twentythree/inputs/!!!!!!.input"
 // 		file, error := os.Open(inputPath)
 // 		utils.CheckInputFileError(error)
 // 		defer file.Close()
@@ -32,7 +32,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 // 		end := time.Since(start)
 
 // 		if cmd.Flag("subject").Changed {
-// 			firstSubject(true)
+// 			CCCCCCCSubject(true)
 // 		}
 // 		utils.PrintResult("one", result, end)
 
@@ -43,7 +43,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 // 		end = time.Since(start)
 
 // 		if cmd.Flag("subject").Changed {
-// 			firstSubject(false)
+// 			CCCCCCCSubject(false)
 // 		}
 // 		utils.PrintResult("two", result, end)
 
