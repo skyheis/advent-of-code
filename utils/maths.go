@@ -6,3 +6,10 @@ func Mcd(a int64, b int64) int64 {
 	}
 	return Mcd(b, a%b)
 }
+
+func Abs(value int) int {
+	if value < 0 {
+		value = -value
+	}
+	return value
+}

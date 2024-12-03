@@ -3,72 +3,183 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 */
 package twentyfour
 
-// import (
-// 	"advent-of-code/utils"
-// 	"bufio"
-// 	"fmt"
-// 	"os"
-// 	"time"
+import (
+	"advent-of-code/utils"
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 
-// 	"github.com/spf13/cobra"
-// )
+	"github.com/spf13/cobra"
+)
 
-// // twentyfourCmd represents the twentyfour command
-// var secondCmd = &cobra.Command{
-// 	Use:   "1st",
-// 	Short: "Day 1 of Advent of Code 2024",
-// 	Long: `Day 1 of Advent of Code 2024, finally my second Advent of Code!!!
-// Here the problem statement: https://adventofcode.com/2024/day/1`,
-// 	Run: func(cmd *cobra.Command, args []string) {
-// 		fmt.Printf("Executing %s\n\n", cmd.Short)
+// twentyfourCmd represents the twentyfour command
+var secondCmd = &cobra.Command{
+	Use:   "2nd",
+	Short: "Day 2 of Advent of Code 2024",
+	Long: `Day 2 of Advent of Code 2024, finally my second Advent of Code!!!
+Here the problem statement: https://adventofcode.com/2024/day/2`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("Executing %s\n\n", cmd.Short)
 
-// 		inputPath := "twentyfour/inputs/one.input"
-// 		file, error := os.Open(inputPath)
-// 		utils.CheckInputFileError(error)
-// 		defer file.Close()
+		inputPath := "twentyfour/inputs/two.input"
+		file, error := os.Open(inputPath)
+		utils.CheckInputFileError(error)
+		defer file.Close()
 
-// 		start := time.Now()
-// 		result := dayTwoFirstPart(bufio.NewScanner(file))
-// 		end := time.Since(start)
+		start := time.Now()
+		result := dayTwoCommonPart(bufio.NewScanner(file), false)
+		end := time.Since(start)
 
-// 		if cmd.Flag("subject").Changed {
-// 			firstSubject(true)
-// 		}
-// 		utils.PrintResult("one", result, end)
+		if cmd.Flag("subject").Changed {
+			secondSubject(true)
+		}
+		utils.PrintResult("one", result, end)
 
-// 		file.Seek(0, 0)
+		file.Seek(0, 0)
 
-// 		start = time.Now()
-// 		result = dayTwoSecondPart(bufio.NewScanner(file))
-// 		end = time.Since(start)
+		start = time.Now()
+		result = dayTwoCommonPart(bufio.NewScanner(file), true)
+		end = time.Since(start)
 
-// 		if cmd.Flag("subject").Changed {
-// 			firstSubject(false)
-// 		}
-// 		utils.PrintResult("two", result, end)
+		if cmd.Flag("subject").Changed {
+			secondSubject(false)
+		}
+		utils.PrintResult("two", result, end)
 
-// 	},
-// }
+	},
+}
 
-// func init() {
-// 	TwentyfourCmd.AddCommand(secondCmd)
-// }
+func init() {
+	TwentyfourCmd.AddCommand(secondCmd)
+}
 
-// func dayTwoSecondPart(scanner *bufio.Scanner) (result int) {
+func dayTwoCommonPart(scanner *bufio.Scanner, bonusLevel bool) (result int) {
 
-// 	return
-// }
+	for scanner.Scan() {
 
-// func dayTwoFirstPart(scanner *bufio.Scanner) (result int) {
+		report := dayTwoGetReport(scanner.Text())
 
-// 	return
-// }
+		if dayTwoIsReportSafe(report, bonusLevel) {
+			result++
+		}
+	}
 
-// func secondSubject(partOne bool) {
-// 	if partOne {
-// 		fmt.Println()
-// 	} else {
-// 		fmt.Println()
-// 	}
-// 	fmt.Println()
-// }
+	return
+}
+
+func dayTwoIsReportSafe(report []int, bonus bool) bool {
+	current := 0
+	increas := false
+	decreas := false
+
+	for i, next := range report {
+		if i == 0 {
+			current = next
+			continue
+		}
+		if current < next {
+			increas = true
+		} else if current > next {
+			decreas = true
+		}
+
+		safe := dayTwoDistances(current, next)
+
+		if !safe || (increas && decreas) {
+			if bonus {
+				noPrev := dayTwoIsReportSafe(utils.RemoveIndex(report, i-2), false)
+				noCurr := dayTwoIsReportSafe(utils.RemoveIndex(report, i-1), false)
+				noNext := dayTwoIsReportSafe(utils.RemoveIndex(report, i), false)
+				return noPrev || noCurr || noNext
+			}
+			return false
+		}
+		current = next
+	}
+	return true
+}
+
+func dayTwoGetReport(line string) (report []int) {
+
+	filded := strings.Fields(line)
+
+	for _, value := range filded {
+		num, err := strconv.Atoi(value)
+		utils.CheckError(err)
+		report = append(report, num)
+	}
+
+	return
+}
+
+func dayTwoDistances(current, next int) bool {
+
+	if current > next {
+		return current-next >= 1 && current-next <= 3
+	} else {
+		return next-current >= 1 && next-current <= 3
+	}
+}
+
+func secondSubject(partOne bool) {
+	if partOne {
+		fmt.Println(`--- Day 2: Red-Nosed Reports ---
+Fortunately, the first location The Historians want to search isn't a long walk from the Chief Historian's office.
+
+While the Red-Nosed Reindeer nuclear fusion/fission plant appears to contain no sign of the Chief Historian, the engineers there run up to you as soon as they see you. Apparently, they still talk about the time Rudolph was saved through molecular synthesis from a single electron.
+
+They're quick to add that - since you're already here - they'd really appreciate your help analyzing some unusual data from the Red-Nosed reactor. You turn to check if The Historians are waiting for you, but they seem to have already divided into groups that are currently searching every corner of the facility. You offer to help with the unusual data.
+
+The unusual data (your puzzle input) consists of many reports, one report per line. Each report is a list of numbers called levels that are separated by spaces. For example:
+
+	7 6 4 2 1
+	1 2 7 8 9
+	9 7 6 2 1
+	1 3 2 4 5
+	8 6 4 4 1
+	1 3 6 7 9
+
+This example data contains six reports each containing five levels.
+
+The engineers are trying to figure out which reports are safe. The Red-Nosed reactor safety systems can only tolerate levels that are either gradually increasing or gradually decreasing. So, a report only counts as safe if both of the following are true:
+
+The levels are either all increasing or all decreasing.
+Any two adjacent levels differ by at least one and at most three.
+In the example above, the reports can be found safe or unsafe by checking those rules:
+
+ - 7 6 4 2 1: Safe because the levels are all decreasing by 1 or 2.
+ - 1 2 7 8 9: Unsafe because 2 7 is an increase of 5.
+ - 9 7 6 2 1: Unsafe because 6 2 is a decrease of 4.
+ - 1 3 2 4 5: Unsafe because 1 3 is increasing but 3 2 is decreasing.
+ - 8 6 4 4 1: Unsafe because 4 4 is neither an increase or a decrease.
+ - 1 3 6 7 9: Safe because the levels are all increasing by 1, 2, or 3.
+
+So, in this example, 2 reports are safe.
+
+Analyze the unusual data from the engineers. How many reports are safe?`)
+	} else {
+		fmt.Println(`--- Part Two ---
+The engineers are surprised by the low number of safe reports until they realize they forgot to tell you about the Problem Dampener.
+
+The Problem Dampener is a reactor-mounted module that lets the reactor safety systems tolerate a single bad level in what would otherwise be a safe report. It's like the bad level never happened!
+
+Now, the same rules apply as before, except if removing a single level from an unsafe report would make it safe, the report instead counts as safe.
+
+More of the above example's reports are now safe:
+
+ - 7 6 4 2 1: Safe without removing any level.
+ - 1 2 7 8 9: Unsafe regardless of which level is removed.
+ - 9 7 6 2 1: Unsafe regardless of which level is removed.
+ - 1 3 2 4 5: Safe by removing the second level, 3.
+ - 8 6 4 4 1: Safe by removing the third level, 4.
+ - 1 3 6 7 9: Safe without removing any level.
+
+Thanks to the Problem Dampener, 4 reports are actually safe!
+
+Update your analysis by handling situations where the Problem Dampener can remove a single level from unsafe reports. How many reports are now safe?`)
+	}
+	fmt.Println()
+}
