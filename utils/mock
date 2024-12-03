@@ -1,0 +1,64 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+*/
+// package twentythree
+
+// import (
+// 	"advent-of-code/utils"
+// 	"bufio"
+// 	"fmt"
+// 	"os"
+// 	"time"
+
+// 	"github.com/spf13/cobra"
+// )
+
+// // twentythreeCmd represents the twentythree command
+// var AAAAAA = &cobra.Command{
+// 	Use:   "9999",
+// 	Short: "Day 9999 of Advent of Code 2023",
+// 	Long: `Day 9999 of Advent of Code 2023, my very first day in Advent of Code!!!
+// Here the problem statement: https://adventofcode.com/2023/day/9999`,
+// 	Run: func(cmd *cobra.Command, args []string) {
+// 		fmt.Printf("Executing %s\n\n", cmd.Short)
+
+// 		inputPath := "twentythree/inputs/!!!!!!.input"
+// 		file, error := os.Open(inputPath)
+// 		utils.CheckInputFileError(error)
+// 		defer file.Close()
+
+// 		start := time.Now()
+// 		result := BBBBBBBFirstPart(bufio.NewScanner(file))
+// 		end := time.Since(start)
+
+// 		if cmd.Flag("subject").Changed {
+// 			CCCCCCCSubject(true)
+// 		}
+// 		utils.PrintResult("one", result, end)
+
+// 		file.Seek(0, 0)
+
+// 		start = time.Now()
+// 		result = BBBBBBBSecondPart(bufio.NewScanner(file))
+// 		end = time.Since(start)
+
+// 		if cmd.Flag("subject").Changed {
+// 			CCCCCCCSubject(false)
+// 		}
+// 		utils.PrintResult("two", result, end)
+
+// 	},
+// }
+
+// func init() {
+// 	TwentythreeCmd.AddCommand(AAAAAA)
+// }
+
+// func CCCCCCCSubject(partOne bool) {
+// 	if partOne {
+// 		fmt.Println()
+// 	} else {
+// 		fmt.Println()
+// 	}
+// 	fmt.Println()
+// }

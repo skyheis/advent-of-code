@@ -1,8 +1,0 @@
-{
-i:
-	"hold time"
-x:
-	"total time"
-formula:
-	"i * (x - i)"
-}
