@@ -47,3 +47,13 @@ func PrintRuneMatrix(mat [][]rune) {
 		fmt.Println()
 	}
 }
+func FSSlicePrint(mod []int) {
+	for _, val := range mod {
+		if val < 0 {
+			fmt.Printf(".")
+		} else {
+			fmt.Printf("%d", val)
+		}
+	}
+	fmt.Println()
+}

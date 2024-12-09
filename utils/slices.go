@@ -75,3 +75,24 @@ func SlicesMoveFront(slice []int, where, who int) (new []int) {
 
 	return
 }
+
+func CountInMatrix(m [][]rune, r rune) (c int) {
+	for _, line := range m {
+		for _, val := range line {
+			if val == r {
+				c++
+			}
+		}
+	}
+
+	return
+}
+
+func CountOccurrences(slice []int, target int) (count int) {
+	for _, value := range slice {
+		if value == target {
+			count++
+		}
+	}
+	return
+}
