@@ -50,30 +50,30 @@ func init() {
 	TwentyfourCmd.AddCommand(eighthCmd)
 }
 
-func inMatrix(area [][]rune, node coordinates) bool {
-	return node.y >= 0 && node.y < len(area)-1 && node.x >= 0 && node.x < len(area[0])
+func inMatrix(area [][]rune, node utils.Coordinates) bool {
+	return node.Y >= 0 && node.Y < len(area) && node.X >= 0 && node.X < len(area[0])
 }
 
-func addAntinode(area [][]rune, overlap map[coordinates]bool, antenna, node coordinates, bonus bool) {
-	var antinode coordinates
+func addAntinode(area [][]rune, overlap map[utils.Coordinates]bool, antenna, node utils.Coordinates, bonus bool) {
+	var antinode utils.Coordinates
 
-	deltaX := utils.Abs(antenna.x - node.x)
-	deltaY := utils.Abs(antenna.y - node.y)
-	if antenna.x > node.x {
-		antinode.x = antenna.x + deltaX
+	deltaX := utils.Abs(antenna.X - node.X)
+	deltaY := utils.Abs(antenna.Y - node.Y)
+	if antenna.X > node.X {
+		antinode.X = antenna.X + deltaX
 	} else {
-		antinode.x = antenna.x - deltaX
+		antinode.X = antenna.X - deltaX
 	}
-	if antenna.y > node.y {
-		antinode.y = antenna.y + deltaY
+	if antenna.Y > node.Y {
+		antinode.Y = antenna.Y + deltaY
 	} else {
-		antinode.y = antenna.y - deltaY
+		antinode.Y = antenna.Y - deltaY
 	}
 
 	if inMatrix(area, antinode) {
-		if area[antinode.y][antinode.x] == '.' {
-			area[antinode.y][antinode.x] = '#'
-		} else if area[antinode.y][antinode.x] != '#' {
+		if area[antinode.Y][antinode.X] == '.' {
+			area[antinode.Y][antinode.X] = '#'
+		} else if area[antinode.Y][antinode.X] != '#' {
 			overlap[antinode] = true
 		}
 
@@ -84,25 +84,26 @@ func addAntinode(area [][]rune, overlap map[coordinates]bool, antenna, node coor
 
 }
 
-func checkOtherAntennas(area [][]rune, overlap map[coordinates]bool, antenna rune, cordAntenna coordinates, bonus bool) {
+func checkOtherAntennas(area [][]rune, overlap map[utils.Coordinates]bool, antenna rune, cordAntenna utils.Coordinates, bonus bool) {
 
 	for y, line := range area {
 		for x, spot := range line {
-			if spot == antenna && (cordAntenna != coordinates{x: x, y: y}) {
-				addAntinode(area, overlap, cordAntenna, coordinates{x: x, y: y}, bonus)
+			if spot == antenna && (cordAntenna != utils.Coordinates{X: x, Y: y}) {
+				addAntinode(area, overlap, cordAntenna, utils.Coordinates{X: x, Y: y}, bonus)
 			}
 		}
 	}
 }
 
 func dayEighCommonPart(filecontent string, bonus bool) (result int) {
-	overlap := make(map[coordinates]bool)
+	overlap := make(map[utils.Coordinates]bool)
 	area := utils.MakeRuneMatrixStr(filecontent)
+	area = area[:len(area)-1] //add
 
 	for y, line := range area {
 		for x, antenna := range line {
 			if antenna != '.' && antenna != '#' {
-				checkOtherAntennas(area, overlap, antenna, coordinates{x: x, y: y}, bonus)
+				checkOtherAntennas(area, overlap, antenna, utils.Coordinates{X: x, Y: y}, bonus)
 			}
 		}
 	}

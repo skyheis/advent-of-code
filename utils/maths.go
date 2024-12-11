@@ -13,3 +13,34 @@ func Abs(value int) int {
 	}
 	return value
 }
+
+func CountDigitsInt(i int) (n int) {
+	if i == 0 {
+		return 1
+	}
+	for i != 0 {
+		i /= 10
+		n++
+	}
+	return
+}
+
+func CountDigitsInt64(i int64) (n int) {
+	if i == 0 {
+		return 1
+	}
+	for i != 0 {
+		i /= 10
+		n++
+	}
+	return
+}
+
+func TenTimes(n int) (power int) {
+	power = 1
+	for n != 0 {
+		power *= 10
+		n--
+	}
+	return
+}

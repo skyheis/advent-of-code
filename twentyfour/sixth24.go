@@ -50,11 +50,6 @@ func init() {
 	TwentyfourCmd.AddCommand(sixthCmd)
 }
 
-type coordinates struct {
-	x int
-	y int
-}
-
 const (
 	VI_STEP  = 'X'
 	VI_OBST  = '#'
@@ -65,12 +60,12 @@ const (
 	VI_TURN  = 'O'
 )
 
-func findGuard(labMap [][]rune) (pos coordinates) {
+func findGuard(labMap [][]rune) (pos utils.Coordinates) {
 	for i, line := range labMap {
 		for k, guard := range line {
 			if guard == VI_UP {
-				pos.x = k
-				pos.y = i
+				pos.X = k
+				pos.Y = i
 				return
 			}
 		}
@@ -166,38 +161,38 @@ func newGuardPosition(labMap [][]rune, x, y int) (int, int, rune) {
 	return x, y, steppedOn
 }
 
-func isFrontObst(labMap [][]rune, curSpot coordinates) bool {
-	switch labMap[curSpot.y][curSpot.x] {
+func isFrontObst(labMap [][]rune, curSpot utils.Coordinates) bool {
+	switch labMap[curSpot.Y][curSpot.X] {
 	case VI_UP:
-		curSpot.y--
+		curSpot.Y--
 	case VI_RIGHT:
-		curSpot.x++
+		curSpot.X++
 	case VI_DOWN:
-		curSpot.y++
+		curSpot.Y++
 	default:
-		curSpot.x--
+		curSpot.X--
 	}
 
-	return labMap[curSpot.y][curSpot.x] == VI_OBST
+	return labMap[curSpot.Y][curSpot.X] == VI_OBST
 }
 
-func followTheGuard(labMap [][]rune, curSpot coordinates) bool {
+func followTheGuard(labMap [][]rune, curSpot utils.Coordinates) bool {
 	var steppedOn rune
-	curSpot.x, curSpot.y, steppedOn = newGuardPosition(labMap, curSpot.x, curSpot.y)
+	curSpot.X, curSpot.Y, steppedOn = newGuardPosition(labMap, curSpot.X, curSpot.Y)
 
-	if curSpot.x == -1 && curSpot.y == -1 {
+	if curSpot.X == -1 && curSpot.Y == -1 {
 		return true
 	} else if steppedOn == VI_TURN && isFrontObst(labMap, curSpot) {
-		labMap[curSpot.y][curSpot.x] = VI_TURN
+		labMap[curSpot.Y][curSpot.X] = VI_TURN
 		return false
 	}
 
 	return followTheGuard(labMap, curSpot)
 }
 
-func addObstacle(filecontent string, startPoint, newObst coordinates) bool {
+func addObstacle(filecontent string, startPoint, newObst utils.Coordinates) bool {
 	newLab := utils.MakeRuneMatrixStr(filecontent)
-	newLab[newObst.y][newObst.x] = VI_OBST
+	newLab[newObst.Y][newObst.X] = VI_OBST
 	// if !followTheGuard(newLab, startPoint) {
 	// 	fmt.Println("loop!", newObst)
 	// 	return true
@@ -206,13 +201,13 @@ func addObstacle(filecontent string, startPoint, newObst coordinates) bool {
 	return !followTheGuard(newLab, startPoint)
 }
 
-func howToLoopGuard(filecontent string, labMap [][]rune, startSpot coordinates) (result int) {
-	labMap[startSpot.y][startSpot.x] = VI_UP
+func howToLoopGuard(filecontent string, labMap [][]rune, startSpot utils.Coordinates) (result int) {
+	labMap[startSpot.Y][startSpot.X] = VI_UP
 
 	for y, line := range labMap {
 		for x, spot := range line {
 			if spot == VI_STEP || spot == VI_TURN {
-				if addObstacle(filecontent, startSpot, coordinates{x: x, y: y}) {
+				if addObstacle(filecontent, startSpot, utils.Coordinates{X: x, Y: y}) {
 					result++
 				}
 			}
@@ -228,7 +223,7 @@ func daySixCommonPart(filecontent string, first bool) (result int) {
 	startSpot := findGuard(labMap)
 	followTheGuard(labMap, startSpot)
 
-	// labMap[startSpot.y][startSpot.x] = VI_UP
+	// labMap[startSpot.Y][startSpot.X] = VI_UP
 
 	utils.WriteFileFromRuneMatrix(labMap, "sasa")
 

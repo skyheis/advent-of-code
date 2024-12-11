@@ -49,6 +49,17 @@ func MakeRuneMatrixStr(filecontent string) [][]rune {
 	return inputRune
 }
 
+func CopyRuneMatrix(m [][]rune) [][]rune {
+	d := make([][]rune, len(m))
+
+	for i, l := range m {
+		d[i] = make([]rune, len(l))
+		copy(d[i], l)
+	}
+
+	return d
+}
+
 func InRange(input [][]rune, x, y int) bool {
 	return x >= 0 && y >= 0 && y < len(input) && x < len(input[y])
 }
@@ -95,4 +106,8 @@ func CountOccurrences(slice []int, target int) (count int) {
 		}
 	}
 	return
+}
+
+func InMatrix(mat [][]rune, spot Coordinates) bool {
+	return spot.Y >= 0 && spot.Y < len(mat) && spot.X >= 0 && spot.X < len(mat[0])
 }
